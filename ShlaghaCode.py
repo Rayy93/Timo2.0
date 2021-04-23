@@ -70,3 +70,63 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    #%%
+#==========================================================================
+'Assignment 1'
+
+#definition of parameters
+beta0 = 1
+a = 1
+bcl = 1
+bwb = 1
+Cf = 1
+Scl_min = 0 #m3
+Scl_max = 0.3*(9100+1.5/13.5*(28355-9100))/2*1.5 #m3
+Sev_min = 0.000*9100 #m3 #assumed min evap 
+Sev_max = 0.0057*9100 #m3 #assumed max evap from the excel 
+
+#the base area of the cover
+#Wb = 
+
+print('')
+print('Scl_min is: ', Scl_min)
+print('Scl_max is: ', Scl_max)
+print('Sev_min is: ', Sev_min)
+print('Sev_max is: ', Sev_max)
+print('')
+#%%
+# Defining the data
+data = pd.read_excel('G7.xlsx')
+
+Qdr = data['Q'].iloc[:]
+Jrf = data['Rain'].iloc[:]
+pEV = data['pEV'].iloc[:]
+Temp = data['Temp'].iloc[:]
+
+
+#%%
+#Define the equation
+
+
+
+#def Lcl(a, Scl, Scl_min, Scl_max, bcl):
+#Lcl = a*( (Scl - Scl_min)/(Scl_max - Scl_min) )**bcl
+    #return Lcl
+
+def dSdt():
+    #How to find Scl and Swb ???
+    Scl = 8500 #m3 ???????
+    Swb = 9000 #m3 ?????
+    Lcl = a*( (Scl - Scl_min)/(Scl_max - Scl_min) )**bcl
+    Lwb = a*( (Swb - Swb))
+    
+    #E(t) Equation:
+    if Scl < Sev_min:
+        fred = 0
+    elif (Sev_min < Scl < Sev_max):
+        fred = (Scl - Sev_min)/(Sev_max - Sev_min)
+    else:           #for Scl > Sev_max:
+        fred = 1
+    print(fred)
+    E = pEV*Cf*fred
